@@ -14,11 +14,7 @@ jobs:
         with:
           python-version: "3.11"
       - name: Install tools
-        run: pip install ruff pre-commit
-      - name: Ruff lint
-        run: ruff check .
-      - name: Ruff format
-        run: ruff format --check .
+        run: pip install pre-commit
       - name: Pre-commit
         run: pre-commit run --all-files --show-diff-on-failure
 

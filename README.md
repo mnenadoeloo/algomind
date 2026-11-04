@@ -29,10 +29,9 @@
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
-pip install ruff pre-commit pytest
+pip install pre-commit pytest
 pre-commit install          # включить хуки на commit
 pre-commit run --all-files  # прогнать вручную
-ruff check . && ruff format --check .
 pytest
 ```
 
