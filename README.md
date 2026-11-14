@@ -38,3 +38,4 @@ pytest
 ## Документация
 
 - [ML System Design Doc](docs/ml_system_design_doc.md)
+- [EDA открытого набора задач Codeforces](eda/README.md)
