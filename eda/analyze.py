@@ -1,4 +1,5 @@
 """Summarize the pinned Codeforces test split; see README.md for reproduction."""
+
 import argparse
 import collections
 import hashlib
@@ -6,6 +7,7 @@ import json
 from pathlib import Path
 
 import pyarrow.parquet as pq
+
 
 def analyze(path):
     parquet = pq.ParquetFile(path)
@@ -69,6 +71,7 @@ def analyze(path):
             sorted(collections.Counter(str(row["contest_start_year"]) for row in rows).items())
         ),
     }
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

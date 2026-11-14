@@ -1,6 +1,6 @@
 # EDA: задачи Codeforces для AlgoMind
 
-Исследован `default/test` из [open-r1/codeforces](https://huggingface.co/datasets/open-r1/codeforces) - это 468 задач периода 2024 — 2025 года. В `default/train` по метаданным ещё 9 556 строк. `test` будет использоваться только для разведочного анализа, не для настройки модели или базы практики. 
+Исследован `default/test` из [open-r1/codeforces](https://huggingface.co/datasets/open-r1/codeforces) - это 468 задач периода 2024 — 2025 года. В `default/train` по метаданным ещё 9 556 строк. `test` будет использоваться только для разведочного анализа, не для настройки модели или базы практики.
 
 ## Воспроизведение
 
@@ -20,9 +20,9 @@ SHA-256 файла: `f3e241f6a111822aed1ee6800d3d3f73917ea4d10e70e264b47a7bcdba4
 
 Поля объединяются в идентификацию и сведения о соревновании (`id`, `aliases`, `contest_id`, `contest_name`, `contest_type`, `contest_start`, `contest_start_year`, `index`), условие и ограничения (`title`, `description`, `input_format`, `output_format`, `interaction_format`, `note`, `examples`, `time_limit`, `memory_limit`), разметку (`rating`, `tags`, `editorial`) и проверку (`testset_size`, `official_tests`, `official_tests_complete`, `input_mode`, `generated_checker`, `executable`, `generated_tests`).
 
-- `id`, `title`, `description` заполнены во всех строках. Повторных `id` и полных совпадений `description` после нормализации пробельных символов нет. 
-- Нет `rating` у 10 (2,1%), тегов у 5 (1,1%), `input_format` у 4, `output_format` у 15, примеров у 1, `editorial` у 208 (44,4%). 
-- Только у 21 (4,5%) `official_tests_complete=true`, у 447 набор официальных тестов неполон. У 448 `executable=true`, по определению авторов это прохождение имеющихся тестов хотя бы тремя решениями, а не доказательство полноты тестов или корректности любых решений. 
+- `id`, `title`, `description` заполнены во всех строках. Повторных `id` и полных совпадений `description` после нормализации пробельных символов нет.
+- Нет `rating` у 10 (2,1%), тегов у 5 (1,1%), `input_format` у 4, `output_format` у 15, примеров у 1, `editorial` у 208 (44,4%).
+- Только у 21 (4,5%) `official_tests_complete=true`, у 447 набор официальных тестов неполон. У 448 `executable=true`, по определению авторов это прохождение имеющихся тестов хотя бы тремя решениями, а не доказательство полноты тестов или корректности любых решений.
 
 ## Распределения
 
