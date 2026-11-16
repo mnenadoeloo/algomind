@@ -28,7 +28,6 @@ def main(out):
     n = r["rows"]
     out.mkdir(parents=True, exist_ok=True)
 
-
     bins = {}
     for key, count in r["ratings"].items():
         label = "нет" if key == "нет" else f"{int(key) // 400 * 400}-{int(key) // 400 * 400 + 399}"
@@ -41,7 +40,6 @@ def main(out):
     ax.tick_params(axis="x", rotation=30)
     save(fig, out, "rating.png")
 
-
     tags = list(r["tags"].items())[:15][::-1]
     fig, ax = plt.subplots(figsize=(8, 5))
     bars = ax.barh([t for t, _ in tags], [c for _, c in tags], color=BLUE)
@@ -52,7 +50,6 @@ def main(out):
     )
     save(fig, out, "tags.png")
 
-
     miss = sorted(((k, v) for k, v in r["missing"].items() if v), key=lambda kv: kv[1])
     fig, ax = plt.subplots(figsize=(8, 5))
     bars = ax.barh([k for k, _ in miss], [v * 100 / n for _, v in miss], color=BLUE)
@@ -62,7 +59,6 @@ def main(out):
         xlabel="% строк с пропуском",
     )
     save(fig, out, "missing.png")
-
 
     fig, axes = plt.subplots(1, 2, figsize=(9, 4))
     complete, execu = r["official_tests_complete"], r["executable"]
@@ -78,14 +74,12 @@ def main(out):
     axes[1].set(title="Год контеста", ylabel="Задач")
     save(fig, out, "tests_years.png")
 
-
     per = r["tags_per_task"]
     fig, ax = plt.subplots(figsize=(8, 4))
     bars = ax.bar(list(per), list(per.values()), color=BLUE)
     ax.bar_label(bars)
     ax.set(title=f"Число тегов на задачу (n={n})", xlabel="Тегов у задачи", ylabel="Задач")
     save(fig, out, "tags_per_task.png")
-
 
     stats = [
         {
@@ -106,7 +100,6 @@ def main(out):
     )
     save(fig, out, "rating_by_tag.png")
 
-
     co = r["top_tags_cooccurrence"]
     names = co["tags"]
     matrix = [[0] * len(names) for _ in names]
@@ -125,7 +118,6 @@ def main(out):
                 ax.text(j, i, f"{value:.2f}", ha="center", va="center", fontsize=8)
     ax.set_title("Пересечение топ-10 тегов (коэффициент Жаккара)")
     save(fig, out, "tags_cooccurrence.png")
-
 
     d = r["description_length"]
     labels = [f"{k}–{k + 1}k" for k in range(3)] + ["3k+"]
