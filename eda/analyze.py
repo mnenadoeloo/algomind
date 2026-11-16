@@ -3,10 +3,28 @@
 import argparse
 import collections
 import hashlib
+import itertools
 import json
+import statistics
 from pathlib import Path
 
 import pyarrow.parquet as pq
+
+
+def box(values):
+    """Quartiles plus 10th/90th percentiles (whiskers) for a boxplot."""
+    deciles = statistics.quantiles(values, n=10, method="inclusive")
+    q1, med, q3 = statistics.quantiles(values, n=4, method="inclusive")
+    return {
+        "n": len(values),
+        "min": min(values),
+        "p10": deciles[0],
+        "q1": q1,
+        "median": med,
+        "q3": q3,
+        "p90": deciles[8],
+        "max": max(values),
+    }
 
 
 def analyze(path):
@@ -47,6 +65,13 @@ def analyze(path):
         str(row["rating"]) if row["rating"] is not None else "нет" for row in rows
     )
     tags = collections.Counter(tag for row in rows for tag in set(row["tags"] or []))
+    top_tags = [tag for tag, _ in tags.most_common(10)]
+    lengths = [len(row["description"]) for row in rows if row["description"]]
+    pairs = collections.Counter(
+        pair
+        for row in rows
+        for pair in itertools.combinations(sorted(set(row["tags"] or []) & set(top_tags)), 2)
+    )
     digest = hashlib.sha256()
     with Path(path).open("rb") as source:
         for chunk in iter(lambda: source.read(1024 * 1024), b""):
@@ -62,6 +87,23 @@ def analyze(path):
             sorted(ratings.items(), key=lambda item: int(item[0]) if item[0] != "нет" else 9999)
         ),
         "tags": dict(tags.most_common()),
+        "tags_per_task": dict(
+            sorted(collections.Counter(len(row["tags"] or []) for row in rows).items())
+        ),
+        "rating_by_top_tag": {
+            tag: box([r["rating"] for r in rows if r["rating"] and tag in (r["tags"] or [])])
+            for tag in top_tags[:5]
+        },
+        "top_tags_cooccurrence": {
+            "tags": top_tags,
+            "pairs": {f"{a} | {b}": n for (a, b), n in sorted(pairs.items())},
+        },
+        "description_length": {
+            **box(lengths),
+            "bins_1000": dict(
+                sorted(collections.Counter(min(n // 1000, 3) for n in lengths).items())
+            ),
+        },
         "input_mode": dict(collections.Counter(str(row["input_mode"]) for row in rows)),
         "official_tests_complete": dict(
             collections.Counter(str(row["official_tests_complete"]) for row in rows)

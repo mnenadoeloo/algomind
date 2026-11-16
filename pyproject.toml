@@ -9,6 +9,7 @@ dependencies = []
 [dependency-groups]
 dev = [
     "pre-commit>=3.7",
+    "pyarrow>=17",
     "pytest>=8.0",
 ]
 
@@ -35,3 +36,4 @@ quote-style = "double"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["eda"]
