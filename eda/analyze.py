@@ -10,7 +10,6 @@ from pathlib import Path
 
 import pyarrow.parquet as pq
 
-
 PILOT_TAGS = ["two pointers", "graphs", "dp", "data structures", "sortings", "implementation"]
 BANDS = ["<1200", "1200-1599", "1600-1999", "2000+"]
 
