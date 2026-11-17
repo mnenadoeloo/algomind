@@ -11,6 +11,14 @@ from pathlib import Path
 import pyarrow.parquet as pq
 
 
+PILOT_TAGS = ["two pointers", "graphs", "dp", "data structures", "sortings", "implementation"]
+BANDS = ["<1200", "1200-1599", "1600-1999", "2000+"]
+
+
+def band(rating):
+    return BANDS[(rating >= 1200) + (rating >= 1600) + (rating >= 2000)]
+
+
 def box(values):
     """Quartiles plus 10th/90th percentiles (whiskers) for a boxplot."""
     deciles = statistics.quantiles(values, n=10, method="inclusive")
@@ -103,6 +111,14 @@ def analyze(path):
             "bins_1000": dict(
                 sorted(collections.Counter(min(n // 1000, 3) for n in lengths).items())
             ),
+        },
+        "topic_rating_bands": {
+            tag: dict(
+                collections.Counter(
+                    band(r["rating"]) for r in rows if r["rating"] and tag in (r["tags"] or [])
+                )
+            )
+            for tag in PILOT_TAGS
         },
         "input_mode": dict(collections.Counter(str(row["input_mode"]) for row in rows)),
         "official_tests_complete": dict(

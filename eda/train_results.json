@@ -1,0 +1,110 @@
+{
+  "rows": 9556,
+  "rated": 9309,
+  "with_tags": 9407,
+  "duplicate_id_rows": 0,
+  "tags": {
+    "math": 2813,
+    "greedy": 2761,
+    "implementation": 2651,
+    "dp": 2041,
+    "constructive algorithms": 1681,
+    "data structures": 1672,
+    "brute force": 1628,
+    "sortings": 1041,
+    "binary search": 1020,
+    "graphs": 1016,
+    "dfs and similar": 891,
+    "trees": 786,
+    "number theory": 721,
+    "strings": 703,
+    "combinatorics": 656,
+    "bitmasks": 553,
+    "two pointers": 524,
+    "*special": 516,
+    "geometry": 377,
+    "dsu": 339,
+    "divide and conquer": 276,
+    "shortest paths": 259,
+    "probabilities": 222,
+    "games": 218,
+    "interactive": 211,
+    "hashing": 201,
+    "flows": 136,
+    "matrices": 119,
+    "fft": 91,
+    "string suffix structures": 87,
+    "graph matchings": 85,
+    "ternary search": 53,
+    "meet-in-the-middle": 49,
+    "expression parsing": 34,
+    "2-sat": 32,
+    "chinese remainder theorem": 16,
+    "schedules": 10
+  },
+  "years": {
+    "2010": 271,
+    "2011": 395,
+    "2012": 490,
+    "2013": 468,
+    "2014": 470,
+    "2015": 435,
+    "2016": 612,
+    "2017": 686,
+    "2018": 824,
+    "2019": 978,
+    "2020": 952,
+    "2021": 814,
+    "2022": 839,
+    "2023": 841,
+    "2024": 481
+  },
+  "topic_rating_bands": {
+    "two pointers": {
+      "2000+": 234,
+      "1600-1999": 149,
+      "1200-1599": 102,
+      "<1200": 38
+    },
+    "graphs": {
+      "2000+": 697,
+      "1600-1999": 210,
+      "<1200": 16,
+      "1200-1599": 81
+    },
+    "dp": {
+      "2000+": 1329,
+      "1600-1999": 424,
+      "1200-1599": 201,
+      "<1200": 71
+    },
+    "data structures": {
+      "2000+": 1136,
+      "1600-1999": 314,
+      "<1200": 54,
+      "1200-1599": 152
+    },
+    "sortings": {
+      "2000+": 340,
+      "1200-1599": 235,
+      "<1200": 231,
+      "1600-1999": 228
+    },
+    "implementation": {
+      "2000+": 540,
+      "1600-1999": 483,
+      "<1200": 915,
+      "1200-1599": 675
+    }
+  },
+  "overlap_with_test": {
+    "test_rows": 468,
+    "same_id": 0,
+    "same_id_or_alias": 0,
+    "same_contest": 0,
+    "same_title": 26,
+    "same_statement": 0,
+    "statement_similarity_ge_0_5": 0,
+    "statement_similarity_max": 0.36
+  }
+}

@@ -1,6 +1,7 @@
 import analyze
 import pyarrow as pa
 import pyarrow.parquet as pq
+import train
 
 N = 468
 LIST_FIELDS = {"aliases", "tags", "examples"}
@@ -50,9 +51,30 @@ def test_analyze_counts(tmp_path):
     r = analyze.analyze(make_parquet(tmp_path))
     assert r["rows"] == N
     assert r["missing"]["rating"] == 1
-    assert r["missing"]["aliases"] == N  # empty list counts as missing
+    assert r["missing"]["aliases"] == N
     assert r["duplicate_id_rows"] == 0
     assert r["tags"] == {"dp": N, "math": 2}
     assert r["tags_per_task"] == {1: N - 2, 2: 2}
+    assert r["topic_rating_bands"]["dp"] == {"<1200": N - 1}
     assert r["official_tests_complete"] == {"True": 1, "False": N - 1}
     assert sum(r["description_length"]["bins_1000"].values()) == N
+
+
+def row(id_, contest, title, text, rating=1000, tags=("dp",), aliases=()):
+    return {
+        "id": id_, "contest_id": contest, "title": title, "description": text,
+        "rating": rating, "tags": list(tags), "aliases": list(aliases),
+        "contest_start_year": 2024,
+    }  # fmt: skip
+
+
+def test_train_overlap():
+    text = "find the minimum number of moves needed to sort the array of n integers"
+    trn = [row("1/A", 1, "Sort", text), row("2/B", 2, "Other", "a graph with n nodes " * 5)]
+    tst = [
+        row("9/A", 9, "Sort", text),
+        row("2/B", 2, "New", "something else entirely different statement here " * 3),
+    ]
+    o = train.summarize(trn, tst)["overlap_with_test"]
+    assert (o["same_id"], o["same_contest"], o["same_title"], o["same_statement"]) == (1, 1, 1, 1)
+    assert o["statement_similarity_ge_0_5"] == 1

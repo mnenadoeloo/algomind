@@ -23,6 +23,23 @@ def save(fig, out, name):
     plt.close(fig)
 
 
+def topic_heatmap(tb, title, out, name):
+    bands = ["<1200", "1200-1599", "1600-1999", "2000+"]
+    topics = list(tb)
+    top = max(max(tb[t].values()) for t in topics)
+    fig, ax = plt.subplots(figsize=(8, 4.5))
+    ax.imshow([[tb[t].get(b, 0) for b in bands] for t in topics], cmap="Blues", aspect="auto")
+    ax.set_xticks(range(len(bands)), bands)
+    ax.set_yticks(range(len(topics)), topics)
+    for i, t in enumerate(topics):
+        for j, b in enumerate(bands):
+            value = tb[t].get(b, 0)
+            color = "white" if value > top / 2 else "black"
+            ax.text(j, i, value, ha="center", va="center", color=color)
+    ax.set(title=title, xlabel="Рейтинг")
+    save(fig, out, name)
+
+
 def main(out):
     r = json.loads((HERE / "results.json").read_text())
     n = r["rows"]
@@ -131,6 +148,13 @@ def main(out):
         ylabel="Задач",
     )
     save(fig, out, "description_length.png")
+    for src, title, name in [
+        (r, "test", "topic_rating.png"),
+        (json.loads((HERE / "train_results.json").read_text()), "train", "topic_rating_train.png"),
+    ]:
+        topic_heatmap(
+            src["topic_rating_bands"], f"Задач по теме и рейтингу (default/{title})", out, name
+        )
 
 
 if __name__ == "__main__":
