@@ -17,6 +17,7 @@
 .
 ├── docs/
 │   └── ml_system_design_doc.md   # дизайн-документ ML-системы
+├── eda/                          # EDA датасета Codeforces: отчёт, скрипты, графики
 ├── src/algomind/                 # исходный код
 ├── tests/                        # тесты
 ├── pyproject.toml                # зависимости и конфиг ruff/pytest
@@ -29,12 +30,15 @@
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
-pip install pre-commit pytest
+pip install pre-commit pytest pyarrow -e .
 pre-commit install          # включить хуки на commit
 pre-commit run --all-files  # прогнать вручную
 pytest
 ```
 
+Воспроизведение EDA и построение графиков — в [eda/README.md](eda/README.md).
+
 ## Документация
 
 - [ML System Design Doc](docs/ml_system_design_doc.md)
+- [EDA открытого набора задач Codeforces](eda/README.md)
