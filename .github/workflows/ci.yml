@@ -26,6 +26,6 @@ jobs:
         with:
           python-version: "3.11"
       - name: Install
-        run: pip install pytest -e .
+        run: pip install pytest pyarrow -e .
       - name: Pytest
         run: pytest || [ $? -eq 5 ]  # код 5 = тестов пока нет
